@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ecocupon OBD2</string>
+    <string name="connect_bt">Conectar OBD2</string>
+    <string name="disconnect_bt">Desconectar</string>
+    <string name="scan_vehicle">Escanear vehículo</string>
+    <string name="sending_data">Enviando datos…</string>
+    <string name="data_sent">Datos enviados correctamente</string>
+    <string name="error_connection">Error de conexión OBD2</string>
+    <string name="error_network">Error de red</string>
+    <string name="no_bt_device">No se encontró dispositivo Bluetooth</string>
+    <string name="bt_permission">Se requiere permiso de Bluetooth</string>
+    <string name="reading_dtc">Leyendo códigos DTC…</string>
+    <string name="vehicle_info">Datos del vehículo</string>
+    <string name="client_name">Nombre del cliente</string>
+    <string name="client_phone">Teléfono</string>
+    <string name="client_email">Email</string>
+    <string name="vehicle_brand">Marca</string>
+    <string name="vehicle_model">Modelo</string>
+    <string name="vehicle_year">Año</string>
+    <string name="vehicle_plate">Patente</string>
+    <string name="dtc_codes">Códigos DTC detectados</string>
+    <string name="save_offline">Guardar offline</string>
+    <string name="send_lead">Enviar lead</string>
+    <string name="saved_offline">Guardado offline</string>
+</resources>
