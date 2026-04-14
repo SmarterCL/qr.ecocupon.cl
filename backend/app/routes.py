@@ -34,6 +34,11 @@ async def health():
     return {"status": "ok", "service": "smarter-os-core"}
 
 
+@router.get("/")
+async def root():
+    return {"service": "SmarterOS Core API", "version": "1.0.0", "endpoints": ["/leads", "/diagnosticos", "/transacciones", "/inventory", "/sync/bulk"]}
+
+
 # ─── Diagnósticos ────────────────────────────────────────────────────────────
 
 @router.post("/diagnosticos", response_model=DiagnosticoResponse, status_code=201)

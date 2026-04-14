@@ -14,10 +14,10 @@ interface LeadApiService {
     suspend fun createLead(@Body lead: LeadRequest): Response<LeadResponse>
 
     companion object {
-        // Local dev: usa adb reverse tcp:8000 tcp:8000
-        // Producción: cambia a tu URL de Render (ej: https://smarter-os-core.onrender.com)
-        private const val BASE_URL = "http://10.0.2.2:8000/api/v1/"
-        // private const val BASE_URL = "https://render.ecocupon.cl/api/v1/"
+        // Producción: SmarterOS Core API en VPS
+        private const val BASE_URL = "https://core.ecocupon.cl/api/v1/"
+        // Local dev: descomentar y usar adb reverse tcp:8000 tcp:8000
+        // private const val BASE_URL = "http://10.0.2.2:8000/api/v1/"
 
         fun create(): LeadApiService {
             return Retrofit.Builder()

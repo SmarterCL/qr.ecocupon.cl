@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import cl.ecocupon.app.data.model.OBD2Reading
 import cl.ecocupon.app.ui.viewmodel.Obd2ViewModel
 import cl.ecocupon.app.ui.viewmodel.UiState
 
@@ -119,6 +120,7 @@ fun EcocuponApp(viewModel: Obd2ViewModel = viewModel()) {
 fun ConnectionScreen(viewModel: Obd2ViewModel) {
     val context = LocalContext.current
     var showDevices by remember { mutableStateOf(false) }
+    var skipBluetooth by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.loadPairedDevices(context)
@@ -139,7 +141,7 @@ fun ConnectionScreen(viewModel: Obd2ViewModel) {
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Conectar OBD2",
+            text = "Ecocupon OBD2",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
@@ -147,20 +149,34 @@ fun ConnectionScreen(viewModel: Obd2ViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Conecta tu adaptador ELM327 Bluetooth",
+            text = "Conecta tu adaptador ELM327 o ingresa datos manualmente",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // Manual mode button
         Button(
+            onClick = { viewModel.uiState = UiState.Connected },
+            modifier = Modifier.fillMaxWidth(0.8f)
+        ) {
+            Icon(Icons.Default.Edit, null)
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Ingreso manual")
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Bluetooth scan button
+        OutlinedButton(
             onClick = { showDevices = true },
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
             Icon(Icons.Default.Bluetooth, null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Buscar dispositivo")
+            Text("Escanear Bluetooth")
         }
 
         if (showDevices && viewModel.pairedDevices.isNotEmpty()) {
@@ -198,9 +214,9 @@ fun ConnectionScreen(viewModel: Obd2ViewModel) {
         if (viewModel.pairedDevices.isEmpty() && showDevices) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                "No hay dispositivos vinculados. Empareja un ELM327 primero.",
+                "No hay dispositivos vinculados. Usá 'Ingreso manual' para probar.",
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.error
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -208,6 +224,8 @@ fun ConnectionScreen(viewModel: Obd2ViewModel) {
 
 @Composable
 fun DataEntryScreen(viewModel: Obd2ViewModel) {
+    var dtcInput by remember { mutableStateOf("") }
+
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
             "Datos del cliente",
@@ -286,25 +304,51 @@ fun DataEntryScreen(viewModel: Obd2ViewModel) {
             )
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            "Códigos DTC (separados por coma)",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            value = dtcInput,
+            onValueChange = { dtcInput = it },
+            label = { Text("Ej: P0171, P0300, P0420") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { viewModel.scanDTCs() },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = true
+            onClick = {
+                val codes = dtcInput.split(",")
+                    .map { it.trim() }
+                    .filter { it.matches(Regex("[PCBU]\\d{4}")) }
+                viewModel.scannedCodes = codes.map { OBD2Reading.fromCode(it) }
+                viewModel.uiState = if (codes.isEmpty()) {
+                    UiState.Scanned(emptyList())
+                } else {
+                    UiState.Scanned(viewModel.scannedCodes)
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
         ) {
             Icon(Icons.Default.Search, null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Escanear DTC")
+            Text("Continuar")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedButton(
-            onClick = { viewModel.disconnect() },
+            onClick = { viewModel.uiState = UiState.Idle },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Desconectar")
+            Text("Volver")
         }
     }
 }
