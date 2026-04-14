@@ -1,6 +1,12 @@
 # Ecocupon
 
-Hecho en Chile 2026 - Sistema de diagnóstico OBD2/J1939 para vehículos
+Hecho en Chile 2026 - Cuponera de descuentos de talleres mecánicos
+
+**Diagnostica tu auto y ahorra en la reparación**
+
+- Detecta fallas (OBD2 o manual)
+- Recibe cupones reales de talleres
+- Agenda o despacho directo
 
 ## Descargar APK
 
@@ -15,15 +21,17 @@ cd /Users/mac/AndroidStudioProjects/Ecocupon
 ./gradlew assembleDebug
 ```
 
+## Cómo funciona
+
+1. Abre Ecocupon.cl
+2. Ingresa falla (o escanea)
+3. Recibe cupón
+4. Elige taller / compra servicio
+5. (Opcional) despacho o agendamiento
+
 ## Acerca de Ecocupon
 
-Aplicación Android nativa para diagnóstico OBD2 y J1939 de vehículos, con sincronización a backend FastAPI.
-
-### Características
-- Diagnóstico OBD2/J1939
-- Registro de datos del vehículo
-- Sincronización con servidor
-- Interfaz moderna con Jetpack Compose
+Plataforma de cupones de descuento para talleres mecánicos en Chile. Con diagnóstico OBD2/J1939 integrado.
 
 ### Tecnologías
 - **Android**: Kotlin, Jetpack Compose, Room, Retrofit
