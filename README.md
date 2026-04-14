@@ -8,12 +8,9 @@ Hecho en Chile 2026 - Cuponera de descuentos de talleres mecánicos
 - Recibe cupones reales de talleres
 - Agenda o despacho directo
 
-## Descargar APK
+## Descargar APK para Android
 
-La APK lista para instalar se encuentra en:
-```
-app/build/outputs/apk/debug/app-debug.apk
-```
+**[Descargar Ecocupon APK](https://github.com/SmarterCL/qr.ecocupon.cl/raw/main/app/build/outputs/apk/debug/app-debug.apk)**
 
 Para reconstruir:
 ```bash
