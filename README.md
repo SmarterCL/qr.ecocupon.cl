@@ -11,6 +11,7 @@ Hecho en Chile 2026 - Cuponera de descuentos de talleres mecánicos
 ## Descargar APK
 
 - [ecocupon.cl](https://ecocupon.cl)
+- [GitHub](https://github.com/SmarterCL/qr.ecocupon.cl/releases/tag/v1.0)
 
 1. Abre Ecocupon.cl
 2. Ingresa falla (o escanea)
